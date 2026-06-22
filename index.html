@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⎛⎝✧⎠⎞ CYBERFORGE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg-primary:#0a0a0f; --bg-secondary:#111118; --bg-card:#14141e; --border-glow:#00ff88; --text-primary:#00ff88; --text-secondary:#88ffcc; --text-dim:#446655; --neon-green:#00ff88; --neon-blue:#00ccff; --neon-purple:#aa66ff; --neon-red:#ff3355; --font-mono:'Share Tech Mono','Courier New',monospace; --font-display:'Orbitron','Segoe UI',sans-serif; }
+        html { scroll-behavior:smooth; }
+        body { font-family:var(--font-mono); background:var(--bg-primary); color:var(--text-primary); min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden; position:relative; }
+        .spider-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:hidden; opacity:0.25; }
+        .spider-bg svg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(2.2); width:80%; height:80%; filter:drop-shadow(0 0 80px rgba(255,255,255,0.05)); animation:spiderFloat 8s ease-in-out infinite; }
+        @keyframes spiderFloat { 0%,100%{transform:translate(-50%,-50%) scale(2.2) rotate(0deg);} 50%{transform:translate(-50%,-50%) scale(2.3) rotate(1deg);} }
+        .spider-bg .leg { animation:legMove 2.5s ease-in-out infinite; transform-origin:top; }
+        .spider-bg .leg:nth-child(odd){animation-delay:.2s;} .spider-bg .leg:nth-child(even){animation-delay:.7s;}
+        @keyframes legMove { 0%,100%{transform:rotate(0deg);} 50%{transform:rotate(4deg);} }
+        .spider-web { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; background:radial-gradient(ellipse at center,transparent 30%,rgba(255,255,255,0.02) 100%); border-radius:50%; }
+        .web-lines { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; height:90%; }
+        .web-lines .line { position:absolute; top:50%; left:50%; width:100%; height:1px; background:rgba(255,255,255,0.04); transform-origin:center; }
+        .web-lines .line:nth-child(1){transform:translate(-50%,-50%) rotate(0deg);} .web-lines .line:nth-child(2){transform:translate(-50%,-50%) rotate(45deg);}
+        .web-lines .line:nth-child(3){transform:translate(-50%,-50%) rotate(90deg);} .web-lines .line:nth-child(4){transform:translate(-50%,-50%) rotate(135deg);}
+        .web-lines .line:nth-child(5){transform:translate(-50%,-50%) rotate(180deg);} .web-lines .line:nth-child(6){transform:translate(-50%,-50%) rotate(225deg);}
+        .web-lines .line:nth-child(7){transform:translate(-50%,-50%) rotate(270deg);} .web-lines .line:nth-child(8){transform:translate(-50%,-50%) rotate(315deg);}
+        .web-rings { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:80%; height:80%; border-radius:50%; border:1px solid rgba(255,255,255,0.03); }
+        .web-rings::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60%; height:60%; border-radius:50%; border:1px solid rgba(255,255,255,0.025); }
+        .web-rings .ring { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border-radius:50%; border:1px solid rgba(255,255,255,0.02); }
+        .web-rings .ring:nth-child(1){width:40%;height:40%;} .web-rings .ring:nth-child(2){width:20%;height:20%;} .web-rings .ring:nth-child(3){width:10%;height:10%;}
+        .matrix-bg { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:hidden; opacity:0.04; }
+        .matrix-bg span { position:absolute; color:var(--neon-green); font-size:14px; animation:fall linear infinite; font-family:var(--font-mono); }
+        @keyframes fall { 0%{transform:translateY(-100vh) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(360deg);opacity:0.1;} }
+        .scanline { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,0.008) 2px,rgba(0,255,136,0.008) 4px); }
+        .scanline::after { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:rgba(0,255,136,0.1); animation:scanMove 8s linear infinite; box-shadow:0 0 60px rgba(0,255,136,0.2); }
+        @keyframes scanMove { 0%{top:-2px;} 100%{top:100%;} }
+        .content { position:relative; z-index:2; flex:1; }
+        .header { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(0,255,136,0.15); padding:12px 40px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px; box-shadow:0 4px 40px rgba(0,0,0,0.8); }
+        .logo { font-family:var(--font-display); font-size:28px; font-weight:900; background:linear-gradient(135deg,var(--neon-green),var(--neon-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 40px rgba(0,255,136,0.3); letter-spacing:2px; }
+        .logo i { -webkit-text-fill-color:initial; color:var(--neon-green); margin-right:8px; text-shadow:0 0 30px var(--neon-green); }
+        .logo .glitch { display:inline-block; animation:glitchText 3s infinite; }
+        @keyframes glitchText { 0%,90%,100%{transform:skew(0);opacity:1;} 92%{transform:skew(2deg);opacity:0.8;} 94%{transform:skew(-2deg);opacity:0.9;} 96%{transform:skew(1deg);opacity:0.7;} }
+        .header-actions { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+        .header-actions .btn { background:transparent; color:var(--text-primary); padding:8px 20px; border-radius:6px; font-weight:600; font-size:13px; transition:0.3s; border:1px solid rgba(0,255,136,0.2); display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:1px; cursor:pointer; }
+        .header-actions .btn:hover { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); box-shadow:0 0 40px rgba(0,255,136,0.3); }
+        .header-actions .btn-outline { border-color:rgba(0,204,255,0.3); color:var(--neon-blue); }
+        .header-actions .btn-outline:hover { background:var(--neon-blue); color:var(--bg-primary); border-color:var(--neon-blue); box-shadow:0 0 40px rgba(0,204,255,0.3); }
+        .user-greeting { font-size:13px; color:var(--text-secondary); padding:6px 14px; border:1px solid rgba(0,255,136,0.1); border-radius:30px; background:rgba(0,255,136,0.03); }
+        .user-greeting i { color:var(--neon-green); margin-right:6px; }
+        .container { position:relative; z-index:2; max-width:1300px; margin:0 auto; padding:30px 20px; flex:1; width:100%; }
+        .section { display:none; animation:fadeIn 0.4s ease; }
+        .section.active { display:block; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(20px) scale(0.98);} to{opacity:1;transform:translateY(0) scale(1);} }
+        .boot-text { font-family:var(--font-mono); font-size:13px; color:var(--text-dim); padding:10px 0; border-bottom:1px solid rgba(0,255,136,0.05); margin-bottom:20px; }
+        .boot-text .highlight { color:var(--neon-green); }
+        .cursor-blink { display:inline-block; width:10px; height:20px; background:var(--neon-green); animation:blink 1s step-end infinite; vertical-align:middle; margin-left:4px; box-shadow:0 0 20px var(--neon-green); }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+        .catalog-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:30px; padding-bottom:15px; border-bottom:1px solid rgba(0,255,136,0.1); }
+        .catalog-header h2 { font-family:var(--font-display); font-size:24px; font-weight:700; color:var(--text-primary); text-shadow:0 0 30px rgba(0,255,136,0.2); }
+        .catalog-header h2 i { color:var(--neon-blue); margin-right:10px; }
+        .catalog-header .count { color:var(--text-dim); font-size:14px; border:1px solid rgba(0,255,136,0.1); padding:4px 16px; border-radius:30px; }
+        .catalog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:25px; }
+        .service-card { background:var(--bg-card); border:1px solid rgba(0,255,136,0.08); border-radius:12px; padding:24px 20px; transition:0.4s; position:relative; overflow:hidden; }
+        .service-card::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(135deg,rgba(0,255,136,0.03),transparent 60%); pointer-events:none; }
+        .service-card:hover { transform:translateY(-6px); border-color:rgba(0,255,136,0.3); box-shadow:0 0 50px rgba(0,255,136,0.08); }
+        .service-card .icon { font-size:36px; color:var(--neon-green); margin-bottom:12px; text-shadow:0 0 30px rgba(0,255,136,0.2); }
+        .service-card .name { font-family:var(--font-display); font-size:16px; font-weight:700; color:#fff; margin-bottom:6px; letter-spacing:0.5px; }
+        .service-card .desc { font-size:13px; color:var(--text-secondary); margin:8px 0 14px; line-height:1.6; opacity:0.8; }
+        .service-card .price { font-size:20px; font-weight:700; color:var(--neon-green); text-shadow:0 0 20px rgba(0,255,136,0.15); margin:10px 0; }
+        .service-card .price small { font-size:13px; font-weight:400; color:var(--text-dim); }
+        .service-card .btn-order { background:transparent; color:var(--text-primary); border:1px solid rgba(0,255,136,0.2); padding:10px 0; border-radius:6px; font-weight:600; transition:0.3s; text-align:center; margin-top:auto; font-family:var(--font-mono); font-size:13px; text-transform:uppercase; letter-spacing:1px; cursor:pointer; }
+        .service-card .btn-order:hover { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); box-shadow:0 0 40px rgba(0,255,136,0.2); }
+        .empty-msg { text-align:center; padding:60px 20px; color:var(--text-dim); font-size:16px; border:1px dashed rgba(0,255,136,0.1); border-radius:12px; }
+        .terminal-box { max-width:900px; margin:0 auto; background:var(--bg-card); border:1px solid rgba(0,255,136,0.1); border-radius:12px; padding:20px; box-shadow:0 0 60px rgba(0,0,0,0.6); }
+        .terminal-box .term-header { display:flex; gap:10px; padding-bottom:12px; border-bottom:1px solid rgba(0,255,136,0.05); margin-bottom:15px; }
+        .terminal-box .term-header .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+        .terminal-box .term-header .dot.red { background:#ff5f56; }
+        .terminal-box .term-header .dot.yellow { background:#ffbd2e; }
+        .terminal-box .term-header .dot.green { background:#27c93f; }
+        .term-output { min-height:200px; max-height:400px; overflow-y:auto; font-size:13px; line-height:1.8; padding:8px; background:rgba(0,0,0,0.3); border-radius:6px; margin-bottom:12px; color:var(--text-secondary); }
+        .term-output .prompt { color:var(--neon-green); }
+        .term-output .error { color:var(--neon-red); }
+        .term-output .success { color:var(--neon-green); }
+        .term-output .info { color:var(--neon-blue); }
+        .term-input-line { display:flex; gap:10px; align-items:center; }
+        .term-input-line span { color:var(--neon-green); font-weight:700; }
+        .term-input-line input { flex:1; background:transparent; border:none; border-bottom:1px solid rgba(0,255,136,0.2); color:var(--text-primary); font-size:14px; padding:6px 0; outline:none; font-family:var(--font-mono); }
+        .term-input-line input:focus { border-bottom-color:var(--neon-green); }
+        .term-commands { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .term-commands .cmd-btn { background:rgba(0,255,136,0.05); border:1px solid rgba(0,255,136,0.1); color:var(--text-secondary); padding:4px 14px; border-radius:4px; font-size:11px; font-family:var(--font-mono); transition:0.3s; cursor:pointer; }
+        .term-commands .cmd-btn:hover { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); }
+        .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:25px; margin-top:20px; }
+        .tool-card { background:var(--bg-card); border:1px solid rgba(0,255,136,0.08); border-radius:12px; padding:24px 20px; transition:0.3s; }
+        .tool-card:hover { border-color:rgba(0,255,136,0.2); }
+        .tool-card h3 { font-family:var(--font-display); font-size:16px; color:#fff; margin-bottom:12px; }
+        .tool-card h3 i { color:var(--neon-green); margin-right:8px; }
+        .tool-card .tool-result { background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; margin-top:10px; font-size:13px; color:var(--text-secondary); min-height:40px; word-break:break-all; }
+        .tool-card .tool-result .green { color:var(--neon-green); }
+        .tool-card .tool-result .red { color:var(--neon-red); }
+        .toast { position:fixed; bottom:30px; right:30px; background:var(--bg-card); color:var(--text-primary); padding:14px 28px; border-radius:8px; border:1px solid rgba(0,255,136,0.15); box-shadow:0 0 60px rgba(0,0,0,0.8); font-weight:500; z-index:999; opacity:0; transform:translateY(20px); transition:0.4s; pointer-events:none; font-family:var(--font-mono); font-size:13px; backdrop-filter:blur(10px); }
+        .toast.show { opacity:1; transform:translateY(0); }
+        .toast.success { border-color:var(--neon-green); box-shadow:0 0 40px rgba(0,255,136,0.1); }
+        .toast.error { border-color:var(--neon-red); box-shadow:0 0 40px rgba(255,51,85,0.1); }
+        .auth-box, .profile-box, .admin-box { max-width:480px; margin:40px auto; background:var(--bg-card); padding:40px 35px; border-radius:12px; border:1px solid rgba(0,255,136,0.08); box-shadow:0 0 60px rgba(0,0,0,0.6); }
+        .auth-box h2, .profile-box h2, .admin-box h2 { font-family:var(--font-display); font-size:22px; margin-bottom:20px; text-align:center; color:#fff; text-shadow:0 0 30px rgba(0,255,136,0.1); }
+        .auth-box h2 i, .profile-box h2 i, .admin-box h2 i { color:var(--neon-green); margin-right:10px; }
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; font-weight:500; margin-bottom:5px; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); }
+        .form-group input, .form-group select, .form-group textarea { width:100%; padding:12px 16px; border:1px solid rgba(0,255,136,0.1); border-radius:6px; font-size:14px; background:var(--bg-primary); color:var(--text-primary); transition:0.3s; font-family:var(--font-mono); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--neon-green); box-shadow:0 0 30px rgba(0,255,136,0.05); }
+        .btn-full { width:100%; padding:14px; background:transparent; color:var(--text-primary); border:1px solid var(--neon-green); border-radius:6px; font-weight:600; font-size:14px; transition:0.3s; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:2px; cursor:pointer; }
+        .btn-full:hover { background:var(--neon-green); color:var(--bg-primary); box-shadow:0 0 40px rgba(0,255,136,0.2); }
+        .form-footer { text-align:center; margin-top:16px; font-size:13px; color:var(--text-dim); }
+        .form-footer a { color:var(--neon-green); font-weight:600; cursor:pointer; transition:0.3s; }
+        .form-footer a:hover { text-shadow:0 0 20px var(--neon-green); }
+        .profile-info p { font-size:14px; margin:10px 0; padding:8px 14px; border:1px solid rgba(0,255,136,0.05); border-radius:6px; background:rgba(0,255,136,0.02); }
+        .profile-info strong { color:var(--text-secondary); }
+        .balance-actions { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; align-items:center; }
+        .balance-actions input { width:100px; padding:6px 10px; background:var(--bg-primary); border:1px solid rgba(0,255,136,0.2); color:var(--text-primary); border-radius:6px; font-family:var(--font-mono); font-size:14px; }
+        .balance-actions button { background:transparent; border:1px solid rgba(0,255,136,0.2); color:var(--text-primary); padding:6px 14px; border-radius:6px; font-family:var(--font-mono); font-size:13px; cursor:pointer; transition:0.3s; }
+        .balance-actions button:hover { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); }
+        .admin-box { max-width:1000px; }
+        .admin-tabs { display:flex; gap:10px; margin-bottom:20px; justify-content:center; }
+        .admin-tabs button { background:transparent; border:1px solid rgba(0,255,136,0.2); color:var(--text-primary); padding:8px 24px; border-radius:30px; font-family:var(--font-mono); cursor:pointer; transition:0.3s; text-transform:uppercase; font-size:12px; letter-spacing:1px; }
+        .admin-tabs button:hover { background:var(--neon-green); color:var(--bg-primary); }
+        .admin-tabs button.active { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); }
+        .admin-table-wrap { overflow-x:auto; margin-top:10px; border-radius:8px; border:1px solid rgba(0,255,136,0.05); }
+        .admin-table { width:100%; border-collapse:collapse; font-size:13px; font-family:var(--font-mono); min-width:600px; }
+        .admin-table th { text-align:left; padding:10px 12px; background:rgba(0,255,136,0.05); color:var(--text-secondary); border-bottom:1px solid rgba(0,255,136,0.1); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+        .admin-table td { padding:10px 12px; border-bottom:1px solid rgba(0,255,136,0.04); vertical-align:middle; }
+        .admin-table tr:hover td { background:rgba(0,255,136,0.02); }
+        .admin-table .status-badge { padding:2px 12px; border-radius:20px; font-size:11px; font-weight:600; display:inline-block; }
+        .admin-table .status-badge.active { background:rgba(0,255,136,0.15); color:var(--neon-green); }
+        .admin-table .status-badge.blocked { background:rgba(255,51,85,0.15); color:var(--neon-red); }
+        .admin-table .user-actions button { background:transparent; border:1px solid rgba(0,255,136,0.1); color:var(--text-primary); padding:4px 10px; border-radius:4px; font-size:11px; font-family:var(--font-mono); cursor:pointer; transition:0.3s; margin:2px; }
+        .admin-table .user-actions button:hover { background:var(--neon-green); color:var(--bg-primary); border-color:var(--neon-green); }
+        .admin-table .user-actions button.danger:hover { background:var(--neon-red); border-color:var(--neon-red); }
+        .admin-input-group { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+        .admin-input-group input { width:80px; padding:4px 8px; background:var(--bg-primary); border:1px solid rgba(0,255,136,0.1); color:var(--text-primary); border-radius:4px; font-family:var(--font-mono); font-size:12px; }
+        .admin-input-group input:focus { border-color:var(--neon-green); }
+        .admin-finance-info { background:rgba(0,255,136,0.03); border:1px solid rgba(0,255,136,0.1); padding:20px; border-radius:8px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+        .admin-finance-info .balance { font-size:24px; color:var(--neon-green); }
+        .admin-finance-info .balance span { font-size:30px; font-weight:700; }
+        .transaction-list { max-height:300px; overflow-y:auto; }
+        .transaction-item { display:flex; justify-content:space-between; padding:8px 12px; border-bottom:1px solid rgba(0,255,136,0.05); font-size:13px; }
+        .transaction-item .type { color:var(--text-secondary); }
+        .transaction-item .type.income { color:var(--neon-green); }
+        .transaction-item .type.outcome { color:var(--neon-red); }
+        .transaction-item .date { color:var(--text-dim); font-size:11px; }
+
+        .recharge-request { background:rgba(0,255,136,0.02); border:1px solid rgba(0,255,136,0.08); border-radius:8px; padding:16px; margin-bottom:16px; }
+        .recharge-request .header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px; }
+        .recharge-request .header .user { color:var(--text-secondary); font-weight:600; }
+        .recharge-request .header .date { color:var(--text-dim); font-size:12px; }
+        .recharge-request .amount { color:var(--neon-green); font-size:20px; font-weight:700; }
+        .recharge-request .message { color:var(--text-primary); margin:8px 0; padding:8px 12px; background:rgba(0,0,0,0.2); border-radius:6px; }
+        .recharge-request .reply { color:var(--neon-blue); margin:8px 0; padding:8px 12px; background:rgba(0,204,255,0.05); border-radius:6px; border-left:2px solid var(--neon-blue); }
+        .recharge-request .reply .label { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+        .recharge-request .admin-reply-form { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+        .recharge-request .admin-reply-form input { flex:1; min-width:150px; padding:8px 12px; background:var(--bg-primary); border:1px solid rgba(0,255,136,0.1); color:var(--text-primary); border-radius:6px; font-family:var(--font-mono); font-size:13px; }
+        .recharge-request .admin-reply-form button { background:var(--neon-green); color:var(--bg-primary); border:none; padding:8px 16px; border-radius:6px; font-family:var(--font-mono); font-weight:600; cursor:pointer; transition:0.3s; }
+        .recharge-request .admin-reply-form button:hover { box-shadow:0 0 30px rgba(0,255,136,0.3); }
+        .recharge-request .admin-reply-form .danger { background:var(--neon-red); }
+        .recharge-request .admin-reply-form .danger:hover { box-shadow:0 0 30px rgba(255,51,85,0.3); }
+        .status-pending { color:var(--neon-red); font-size:12px; font-weight:600; }
+        .status-replied { color:var(--neon-blue); font-size:12px; font-weight:600; }
+        .status-completed { color:var(--neon-green); font-size:12px; font-weight:600; }
+
+        #rechargeForm { display:none; background:rgba(0,255,136,0.02); border:1px solid rgba(0,255,136,0.08); padding:20px; border-radius:8px; margin-top:16px; }
+        #rechargeForm input, #rechargeForm textarea { width:100%; padding:12px; background:var(--bg-primary); border:1px solid rgba(0,255,136,0.1); color:var(--text-primary); border-radius:6px; font-family:var(--font-mono); font-size:14px; margin-bottom:10px; }
+        #rechargeForm textarea { resize:vertical; min-height:60px; }
+        #rechargeForm .actions { display:flex; gap:12px; flex-wrap:wrap; }
+        #rechargeForm .actions button { background:var(--neon-green); color:var(--bg-primary); border:none; padding:10px 24px; border-radius:6px; font-family:var(--font-mono); font-weight:600; cursor:pointer; transition:0.3s; }
+        #rechargeForm .actions button:hover { box-shadow:0 0 30px rgba(0,255,136,0.3); }
+        #rechargeForm .actions .cancel { background:transparent; border:1px solid var(--text-dim); color:var(--text-dim); }
+
+        @media (max-width:700px) {
+            .header { padding:12px 20px; flex-direction:column; align-items:stretch; }
+            .header-actions { justify-content:center; }
+            .catalog-grid { grid-template-columns:1fr; }
+            .tools-grid { grid-template-columns:1fr; }
+            .auth-box, .profile-box, .admin-box { padding:25px 20px; margin:20px 10px; }
+            .logo { font-size:22px; }
+            .terminal-box { padding:12px; }
+            .term-output { max-height:200px; font-size:12px; }
+            .spider-bg svg { transform:translate(-50%,-50%) scale(3); }
+            .admin-table { font-size:12px; min-width:400px; }
+            .admin-table th, .admin-table td { padding:6px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Паук -->
+<div class="spider-bg">
+    <div class="spider-web"></div>
+    <div class="web-lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="web-rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+    <svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400 340 L400 100" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+        <path d="M400 420 L400 700" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+        <path d="M350 390 L100 350" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <path d="M450 390 L700 350" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <ellipse cx="400" cy="420" rx="70" ry="90" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" stroke-width="2.5"/>
+        <ellipse cx="400" cy="370" rx="55" ry="65" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+        <ellipse cx="400" cy="320" rx="40" ry="30" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+        <circle cx="385" cy="312" r="6" fill="rgba(255,0,0,0.7)" stroke="rgba(255,0,0,0.3)" stroke-width="1"/>
+        <circle cx="415" cy="312" r="6" fill="rgba(255,0,0,0.7)" stroke="rgba(255,0,0,0.3)" stroke-width="1"/>
+        <circle cx="380" cy="320" r="3.5" fill="rgba(255,0,0,0.4)"/>
+        <circle cx="420" cy="320" r="3.5" fill="rgba(255,0,0,0.4)"/>
+        <path d="M388 335 L372 355 L382 348 L388 335Z" fill="rgba(200,200,200,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+        <path d="M412 335 L428 355 L418 348 L412 335Z" fill="rgba(200,200,200,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+        <g class="leg"><path d="M340 380 L250 330 L200 280 L170 250" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M200 280 L180 260" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M335 395 L240 370 L190 350 L150 340" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M190 350 L170 340" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M340 415 L250 430 L190 460 L160 490" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M190 460 L170 480" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M345 440 L260 480 L210 520 L190 560" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M210 520 L195 550" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M460 380 L550 330 L600 280 L630 250" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M600 280 L620 260" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M465 395 L560 370 L610 350 L650 340" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M610 350 L630 340" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M460 415 L550 430 L610 460 L640 490" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M610 460 L630 480" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <g class="leg"><path d="M455 440 L540 480 L590 520 L610 560" stroke="rgba(255,255,255,0.6)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M590 520 L605 550" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <path d="M365 380 L400 405 L435 380" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+        <path d="M375 405 L400 430 L425 405" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+        <path d="M385 430 L400 455 L415 430" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+        <text x="390" y="405" font-family="monospace" font-size="16" fill="rgba(0,255,136,0.15)" font-weight="bold">&lt;/&gt;</text>
+        <path d="M380 340 Q370 300 350 280" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
+        <path d="M420 340 Q430 300 450 280" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
+        <path d="M380 480 Q370 520 350 540" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
+        <path d="M420 480 Q430 520 450 540" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
+    </svg>
+</div>
+
+<div class="matrix-bg" id="matrixBg"></div>
+<div class="scanline"></div>
+
+<header class="header">
+    <div class="logo"><i class="fas fa-skull"></i><span class="glitch">CYBERFORGE</span><span style="font-size:12px;-webkit-text-fill-color:initial;color:var(--text-dim);letter-spacing:2px;margin-left:8px;">[v.3.0]</span></div>
+    <div class="header-actions">
+        <span class="user-greeting" id="userGreeting"><i class="fas fa-user-astronaut"></i> ANON</span>
+        <button class="btn" id="mainLoginBtn" onclick="showSection('login')"><i class="fas fa-key"></i> Вход</button>
+        <button class="btn btn-outline" id="mainRegisterBtn" onclick="showSection('register')"><i class="fas fa-user-plus"></i> Регистр</button>
+        <button class="btn" id="mainProfileBtn" style="display:none;" onclick="showSection('profile')"><i class="fas fa-id-card"></i> Профиль</button>
+        <button class="btn btn-outline" id="mainLogoutBtn" style="display:none;" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выход</button>
+        <button class="btn" id="mainAdminBtn" style="display:none;" onclick="showSection('admin')"><i class="fas fa-terminal"></i> Админ</button>
+        <button class="btn" onclick="showSection('tools')"><i class="fas fa-tools"></i> Инструменты</button>
+        <button class="btn btn-outline" onclick="showSection('terminal')"><i class="fas fa-terminal"></i> Терминал</button>
+    </div>
+</header>
+
+<div id="toast" class="toast"></div>
+
+<div class="container">
+    <!-- КАТАЛОГ -->
+    <section id="section-catalog" class="section active">
+        <div class="boot-text"><span class="highlight">></span> SYSTEM_READY :: <span id="serviceCount">0</span> SERVICES_AVAILABLE <span class="cursor-blink"></span></div>
+        <div class="catalog-header"><h2><i class="fas fa-code"></i> ДОСТУПНЫЕ УСЛУГИ</h2><span class="count" id="serviceCountLabel">0 услуг</span></div>
+        <div id="catalogGrid" class="catalog-grid"></div>
+    </section>
+
+    <!-- ТЕРМИНАЛ -->
+    <section id="section-terminal" class="section">
+        <div class="boot-text"><span class="highlight">></span> TERMINAL_ACCESS :: ВВЕДИТЕ КОМАНДУ <span class="cursor-blink"></span></div>
+        <div class="terminal-box">
+            <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span style="margin-left:10px;color:var(--text-dim);font-size:12px;">root@cyberforge:~</span></div>
+            <div class="term-output" id="termOutput"><div><span class="prompt">> </span>Добро пожаловать в CYBERFORGE Terminal v3.0</div><div><span class="prompt">> </span>Введите <span class="info">help</span> для списка команд</div></div>
+            <div class="term-input-line"><span>❯</span><input type="text" id="termInput" placeholder="введите команду..." autofocus></div>
+            <div class="term-commands"><button class="cmd-btn" onclick="runCommand('help')">help</button><button class="cmd-btn" onclick="runCommand('scan')">scan</button><button class="cmd-btn" onclick="runCommand('whoami')">whoami</button><button class="cmd-btn" onclick="runCommand('date')">date</button><button class="cmd-btn" onclick="runCommand('clear')">clear</button><button class="cmd-btn" onclick="runCommand('hack')">hack</button><button class="cmd-btn" onclick="runCommand('banner')">banner</button></div>
+        </div>
+    </section>
+
+    <!-- ИНСТРУМЕНТЫ -->
+    <section id="section-tools" class="section">
+        <div class="boot-text"><span class="highlight">></span> HACKER_TOOLS_LOADED <span class="cursor-blink"></span></div>
+        <div class="catalog-header"><h2><i class="fas fa-tools"></i> ХАКЕРСКИЕ ИНСТРУМЕНТЫ</h2></div>
+        <div class="tools-grid">
+            <div class="tool-card"><h3><i class="fas fa-search"></i> Сканер портов</h3><div style="display:flex;gap:8px;flex-wrap:wrap;"><input type="text" id="scanTarget" placeholder="example.com" style="flex:1;min-width:120px;background:#0a0a0f;border:1px solid rgba(0,255,136,0.1);color:#00ff88;padding:8px 12px;border-radius:6px;font-family:var(--font-mono);"><button class="cmd-btn" onclick="scanPorts()" style="background:var(--neon-green);color:var(--bg-primary);padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:var(--font-mono);">Сканировать</button></div><div class="tool-result" id="scanResult">⏳ Введите домен и нажмите сканировать</div></div>
+            <div class="tool-card"><h3><i class="fas fa-key"></i> Генератор паролей</h3><div style="display:flex;gap:8px;flex-wrap:wrap;"><input type="number" id="passLength" value="16" min="4" max="64" style="width:70px;background:#0a0a0f;border:1px solid rgba(0,255,136,0.1);color:#00ff88;padding:8px 12px;border-radius:6px;font-family:var(--font-mono);"><button class="cmd-btn" onclick="generatePassword()" style="background:var(--neon-blue);color:var(--bg-primary);padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:var(--font-mono);">Сгенерировать</button></div><div class="tool-result" id="passResult">Нажмите «Сгенерировать»</div><div style="margin-top:6px;font-size:12px;color:var(--text-dim);">Стойкость: <span id="passStrength">—</span></div></div>
+            <div class="tool-card"><h3><i class="fas fa-lock"></i> Шифровальщик текста</h3><div style="display:flex;gap:8px;flex-wrap:wrap;"><input type="text" id="cipherInput" placeholder="текст для шифрования" style="flex:1;min-width:120px;background:#0a0a0f;border:1px solid rgba(0,255,136,0.1);color:#00ff88;padding:8px 12px;border-radius:6px;font-family:var(--font-mono);"><select id="cipherType" style="width:100px;background:#0a0a0f;border:1px solid rgba(0,255,136,0.1);color:#00ff88;padding:8px 12px;border-radius:6px;font-family:var(--font-mono);"><option value="base64">Base64</option><option value="caesar">Caesar (ROT13)</option><option value="xor">XOR</option></select></div><button class="cmd-btn" onclick="cipherText()" style="margin-top:8px;background:var(--neon-purple);color:var(--bg-primary);padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:var(--font-mono);">Зашифровать</button><div class="tool-result" id="cipherResult">Ожидает ввода...</div></div>
+            <div class="tool-card"><h3><i class="fas fa-fingerprint"></i> Генератор хешей</h3><div style="display:flex;gap:8px;flex-wrap:wrap;"><input type="text" id="hashInput" placeholder="текст для хеша" style="flex:1;min-width:120px;background:#0a0a0f;border:1px solid rgba(0,255,136,0.1);color:#00ff88;padding:8px 12px;border-radius:6px;font-family:var(--font-mono);"></div><button class="cmd-btn" onclick="generateHash()" style="margin-top:8px;background:var(--neon-green);color:var(--bg-primary);padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:var(--font-mono);">Создать хеш (SHA-256)</button><div class="tool-result" id="hashResult">Ожидает ввода...</div></div>
+        </div>
+    </section>
+
+    <!-- ЛОГИН И РЕГИСТРАЦИЯ -->
+    <section id="section-login" class="section">
+        <div class="auth-box"><h2><i class="fas fa-key"></i> АВТОРИЗАЦИЯ</h2><form id="loginForm"><div class="form-group"><label><i class="fas fa-envelope"></i> EMAIL</label><input type="email" id="loginEmail" placeholder="anonymous@cyber.forge" required></div><div class="form-group"><label><i class="fas fa-lock"></i> ПАРОЛЬ</label><input type="password" id="loginPassword" placeholder="••••••••" required></div><button type="submit" class="btn-full"><i class="fas fa-sign-in-alt"></i> ВОЙТИ</button><div class="form-footer">Нет доступа? <a onclick="showSection('register')">Создать аккаунт</a></div></form></div>
+    </section>
+
+    <section id="section-register" class="section">
+        <div class="auth-box"><h2><i class="fas fa-user-plus"></i> РЕГИСТРАЦИЯ</h2><form id="registerForm"><div class="form-group"><label><i class="fas fa-user"></i> ИМЯ</label><input type="text" id="regName" placeholder="H4ck3r" required></div><div class="form-group"><label><i class="fas fa-envelope"></i> EMAIL</label><input type="email" id="regEmail" placeholder="hacker@cyber.space" required></div><div class="form-group"><label><i class="fas fa-lock"></i> ПАРОЛЬ</label><input type="password" id="regPassword" placeholder="••••••••" required minlength="4"></div><button type="submit" class="btn-full"><i class="fas fa-user-shield"></i> СОЗДАТЬ</button><div class="form-footer">Уже в системе? <a onclick="showSection('login')">Войти</a></div></form></div>
+    </section>
+
+    <!-- ПРОФИЛЬ -->
+    <section id="section-profile" class="section">
+        <div class="profile-box">
+            <h2><i class="fas fa-id-card"></i> ПРОФИЛЬ</h2>
+            <div class="profile-info" id="profileInfo">
+                <p><strong>ИМЯ:</strong> <span id="profileName">—</span></p>
+                <p><strong>EMAIL:</strong> <span id="profileEmail">—</span></p>
+                <p><strong>РОЛЬ:</strong> <span id="profileRole">user</span></p>
+                <p><strong>БАЛАНС:</strong> <span id="profileBalance">0</span> ₽</p>
+            </div>
+            <div id="adminRecharge" style="display:none;" class="balance-actions">
+                <button onclick="if(currentUser)addUserBalance(currentUser.id,100)">+100 ₽</button>
+                <button onclick="if(currentUser)addUserBalance(currentUser.id,500)">+500 ₽</button>
+                <button onclick="if(currentUser)addUserBalance(currentUser.id,1000)">+1000 ₽</button>
+                <input type="number" id="customRecharge" placeholder="Сумма" min="1" step="1">
+                <button onclick="customRecharge()">Пополнить</button>
+            </div>
+            <div style="margin-top:20px;border-top:1px solid rgba(0,255,136,0.1);padding-top:16px;">
+                <h3 style="font-family:var(--font-display);font-size:16px;color:var(--text-secondary);margin-bottom:12px;"><i class="fas fa-hand-holding-usd"></i> Пополнение баланса</h3>
+                <button onclick="showRechargeForm()" class="btn-full" style="border-color:var(--neon-blue);color:var(--neon-blue);margin-bottom:12px;"><i class="fas fa-plus-circle"></i> Создать заявку</button>
+                <div id="rechargeForm">
+                    <input type="number" id="rechargeAmount" placeholder="Сумма пополнения (₽)" min="1" step="1">
+                    <textarea id="rechargeComment" placeholder="Комментарий (необязательно)" rows="2"></textarea>
+                    <div class="actions"><button onclick="sendRechargeRequest()">Отправить</button><button class="cancel" onclick="closeRechargeForm()">Отмена</button></div>
+                </div>
+                <div id="userRecharges"></div>
+            </div>
+            <button class="btn-full" style="margin-top:20px;border-color:var(--neon-red);color:var(--neon-red);" onclick="logout()"><i class="fas fa-sign-out-alt"></i> ВЫЙТИ</button>
+        </div>
+    </section>
+
+    <!-- АДМИНКА -->
+    <section id="section-admin" class="section">
+        <div class="admin-box" style="max-width:1000px;">
+            <h2><i class="fas fa-terminal"></i> АДМИН-КОНСОЛЬ</h2>
+            <p style="text-align:center;color:var(--text-dim);margin-bottom:20px;font-size:13px;"><i class="fas fa-shield-alt" style="color:var(--neon-green);"></i> Управление услугами, пользователями, финансами и заявками</p>
+            <div class="admin-tabs">
+                <button class="active" id="tabServices" onclick="switchAdminTab('services')">📦 Услуги</button>
+                <button id="tabUsers" onclick="switchAdminTab('users')">👥 Пользователи</button>
+                <button id="tabFinance" onclick="switchAdminTab('finance')">💰 Финансы</button>
+                <button id="tabRecharges" onclick="switchAdminTab('recharges')">💳 Пополнения</button>
+            </div>
+            <div id="adminServicesBlock">
+                <div class="admin-controls" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+                    <button class="btn" onclick="openAddService()" style="background:transparent;color:var(--text-primary);border:1px solid rgba(0,255,136,0.15);padding:8px 20px;border-radius:6px;font-weight:500;font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1px;transition:0.3s;cursor:pointer;"><i class="fas fa-plus"></i> Добавить</button>
+                    <button class="btn btn-danger" onclick="clearAllServices()" style="background:transparent;color:var(--text-primary);border:1px solid rgba(255,51,85,0.3);padding:8px 20px;border-radius:6px;font-weight:500;font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1px;transition:0.3s;cursor:pointer;color:var(--neon-red);"><i class="fas fa-trash"></i> Очистить</button>
+                </div>
+                <div id="adminServiceForm" style="display:none;background:rgba(0,255,136,0.02);border:1px solid rgba(0,255,136,0.08);padding:20px;border-radius:8px;margin-bottom:20px;">
+                    <h3 id="adminFormTitle" style="font-family:var(--font-display);color:#fff;font-size:16px;margin-bottom:15px;">Добавить услугу</h3>
+                    <div class="form-group"><label>НАЗВАНИЕ</label><input type="text" id="adminServiceName" placeholder="Например: Telegram-бот"></div>
+                    <div class="form-group"><label>ОПИСАНИЕ</label><textarea id="adminServiceDesc" rows="2" placeholder="Краткое описание"></textarea></div>
+                    <div class="form-group"><label>ЦЕНА (₽)</label><input type="number" id="adminServicePrice" placeholder="5000"></div>
+                    <div class="form-group"><label>ИКОНКА (Font Awesome)</label><input type="text" id="adminServiceIcon" placeholder="fa-robot" value="fa-code"></div>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn-full" style="flex:1;" id="adminSaveServiceBtn" onclick="saveService()"><i class="fas fa-save"></i> СОХРАНИТЬ</button><button class="btn-full" style="flex:0 1 auto;border-color:var(--text-dim);color:var(--text-dim);" onclick="closeServiceForm()">ОТМЕНА</button></div>
+                </div>
+                <div id="adminServiceList"></div>
+            </div>
+            <div id="adminUsersBlock" style="display:none;">
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Баланс (₽)</th><th>Статус</th><th>Действия</th></tr></thead><tbody id="adminUsersTableBody"></tbody></table></div>
+            </div>
+            <div id="adminFinanceBlock" style="display:none;">
+                <div class="admin-finance-info"><div><div style="color:var(--text-dim);font-size:13px;">Баланс администратора</div><div class="balance"><span id="adminBalanceDisplay">0</span> ₽</div></div><button onclick="withdrawAdmin()" style="background:transparent;border:1px solid var(--neon-green);color:var(--neon-green);padding:8px 24px;border-radius:30px;cursor:pointer;font-family:var(--font-mono);">💳 Вывести на карту</button></div>
+                <div style="margin-top:10px;"><h4 style="color:var(--text-secondary);margin-bottom:10px;">📜 История транзакций</h4><div class="transaction-list" id="transactionList"></div></div>
+            </div>
+            <div id="adminRechargesBlock" style="display:none;">
+                <h3 style="font-family:var(--font-display);color:var(--text-secondary);margin-bottom:15px;">💳 Заявки на пополнение</h3>
+                <div id="adminRechargeList"></div>
+            </div>
+            <p style="text-align:center;margin-top:15px;font-size:12px;color:var(--text-dim);"><i class="fas fa-lock" style="color:var(--neon-green);"></i> АДМИН-ПАРОЛЬ: <span style="color:var(--neon-green);">admin123</span></p>
+        </div>
+    </section>
+</div>
+
+<script>
+    (function createMatrix() {
+        const container = document.getElementById('matrixBg');
+        const chars = '0123456789ABCDEF';
+        for (let i = 0; i < 60; i++) {
+            const span = document.createElement('span');
+            span.textContent = chars[Math.floor(Math.random() * chars.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.fontSize = (10 + Math.random() * 18) + 'px';
+            span.style.animationDuration = (6 + Math.random() * 12) + 's';
+            span.style.animationDelay = (Math.random() * 8) + 's';
+            span.style.opacity = 0.1 + Math.random() * 0.2;
+            container.appendChild(span);
+        }
+    })();
+
+    const STORAGE_KEY = 'cyberforge_data';
+    function getData() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return {
+            users: [
+                { id: 1, name: 'Admin', email: 'admin@cyber.forge', password: 'admin123', role: 'admin', balance: 0, isBlocked: false }
+            ],
+            services: [
+                { id: 1, name: 'Разработка Telegram-ботов', desc: 'Создание ботов для уведомлений, заказов, чат-ботов для бизнеса, автоматизации общения.', price: 15000, icon: 'fa-robot' },
+                { id: 2, name: 'Нагрузочное тестирование', desc: 'Проверка устойчивости сайтов и серверов к высоким нагрузкам (легальный стресс-тест с разрешения владельца).', price: 30000, icon: 'fa-bolt' },
+                { id: 3, name: 'Парсинг данных', desc: 'Сбор публичной информации с сайтов (цены, контакты, новости) для аналитики и маркетинга.', price: 8000, icon: 'fa-spider' },
+                { id: 4, name: 'Настройка VPN и приватности', desc: 'Помощь в настройке VPN, прокси, защите личных данных в интернете.', price: 6000, icon: 'fa-mask' },
+                { id: 5, name: 'Аудит безопасности', desc: 'Проверка сайтов и приложений на уязвимости (пентест) только с письменного разрешения владельца.', price: 40000, icon: 'fa-bug' },
+                { id: 6, name: 'Автоматизация рутины', desc: 'Написание скриптов для автоматизации любых повторяющихся задач (обработка файлов, отправка писем, сбор данных).', price: 4000, icon: 'fa-cogs' }
+            ],
+            nextServiceId: 7,
+            nextUserId: 2,
+            adminBalance: 0,
+            transactions: [],
+            rechargeRequests: []
+        };
+    }
+    function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+    let appData = getData();
+    let currentUser = null;
+
+    function showToast(msg, type = '') {
+        const toast = document.getElementById('toast');
+        toast.textContent = '> ' + msg;
+        toast.className = 'toast show ' + type;
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => { toast.classList.remove('show'); }, 3500);
+    }
+
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById('section-' + sectionId);
+        if (target) target.classList.add('active');
+        updateHeader();
+        if (sectionId === 'admin') {
+            if (!currentUser || currentUser.role !== 'admin') {
+                const pwd = prompt('ВВЕДИТЕ АДМИН-ПАРОЛЬ:');
+                if (pwd === 'admin123') {
+                    if (!currentUser) {
+                        currentUser = { id: 0, name: 'Admin', email: 'root@cyber.forge', role: 'admin', balance: 0, isBlocked: false };
+                    } else {
+                        currentUser.role = 'admin';
+                    }
+                    updateHeader();
+                    renderAdminServices();
+                    renderAdminUsers();
+                    renderAdminFinance();
+                    renderAdminRecharges();
+                    showToast('ДОСТУП РАЗРЕШЁН', 'success');
+                } else {
+                    showToast('НЕВЕРНЫЙ ПАРОЛЬ', 'error');
+                    showSection('catalog');
+                    return;
+                }
+            }
+            renderAdminServices();
+            renderAdminUsers();
+            renderAdminFinance();
+            renderAdminRecharges();
+            switchAdminTab('services');
+        }
+        if (sectionId === 'profile') {
+            updateProfileInfo();
+            renderUserRecharges();
+        }
+        if (sectionId === 'catalog') renderCatalog();
+        if (sectionId === 'terminal') document.getElementById('termInput').focus();
+    }
+
+    function loadCurrentUser() {
+        const saved = localStorage.getItem('cyberforge_session');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                const user = appData.users.find(u => u.id === parsed.id && u.email === parsed.email);
+                if (user) {
+                    if (user.isBlocked) {
+                        showToast('❌ АККАУНТ ЗАБЛОКИРОВАН', 'error');
+                        localStorage.removeItem('cyberforge_session');
+                        return;
+                    }
+                    currentUser = user;
+                    return;
+                }
+            } catch (e) {}
+        }
+        currentUser = null;
+        localStorage.removeItem('cyberforge_session');
+    }
+
+    function saveSession(user) {
+        localStorage.setItem('cyberforge_session', JSON.stringify({ id: user.id, email: user.email }));
+        currentUser = user;
+        updateHeader();
+        renderCatalog();
+    }
+
+    function updateHeader() {
+        const greeting = document.getElementById('userGreeting');
+        const loginBtn = document.getElementById('mainLoginBtn');
+        const registerBtn = document.getElementById('mainRegisterBtn');
+        const profileBtn = document.getElementById('mainProfileBtn');
+        const logoutBtn = document.getElementById('mainLogoutBtn');
+        const adminBtn = document.getElementById('mainAdminBtn');
+        if (currentUser) {
+            greeting.innerHTML = `<i class="fas fa-user-astronaut"></i> ${currentUser.name || currentUser.email}`;
+            loginBtn.style.display = 'none';
+            registerBtn.style.display = 'none';
+            profileBtn.style.display = 'inline-flex';
+            logoutBtn.style.display = 'inline-flex';
+            adminBtn.style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
+        } else {
+            greeting.innerHTML = `<i class="fas fa-user-astronaut"></i> ANON`;
+            loginBtn.style.display = 'inline-flex';
+            registerBtn.style.display = 'inline-flex';
+            profileBtn.style.display = 'none';
+            logoutBtn.style.display = 'none';
+            adminBtn.style.display = 'none';
+        }
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+        if (!name || !email || !password) { showToast('ЗАПОЛНИТЕ ВСЕ ПОЛЯ', 'error'); return; }
+        if (appData.users.find(u => u.email === email)) { showToast('EMAIL УЖЕ ЗАРЕГИСТРИРОВАН', 'error'); return; }
+        const newUser = { id: appData.nextUserId++, name, email, password, role: 'user', balance: 0, isBlocked: false };
+        appData.users.push(newUser);
+        saveData(appData);
+        showToast('АККАУНТ СОЗДАН. ВОЙДИТЕ.', 'success');
+        showSection('login');
+        document.getElementById('registerForm').reset();
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        const user = appData.users.find(u => u.email === email && u.password === password);
+        if (!user) { showToast('НЕВЕРНЫЙ EMAIL ИЛИ ПАРОЛЬ', 'error'); return; }
+        if (user.isBlocked) { showToast('❌ АККАУНТ ЗАБЛОКИРОВАН', 'error'); return; }
+        saveSession(user);
+        showToast('ДОБРО ПОЖАЛОВАТЬ, ' + user.name.toUpperCase(), 'success');
+        showSection('catalog');
+        document.getElementById('loginForm').reset();
+    });
+
+    function logout() {
+        if (currentUser && currentUser.id === 0 && currentUser.role === 'admin') {
+            currentUser = null;
+        } else {
+            currentUser = null;
+        }
+        localStorage.removeItem('cyberforge_session');
+        appData = getData();
+        updateHeader();
+        showSection('catalog');
+        showToast('ВЫХОД ВЫПОЛНЕН', '');
+    }
+
+    function renderCatalog() {
+        const grid = document.getElementById('catalogGrid');
+        const countLabel = document.getElementById('serviceCountLabel');
+        const count = document.getElementById('serviceCount');
+        if (appData.services.length === 0) {
+            grid.innerHTML = `<div class="empty-msg"><i class="fas fa-skull"></i> УСЛУГ НЕТ</div>`;
+            countLabel.textContent = '0 услуг';
+            count.textContent = '0';
+            return;
+        }
+        grid.innerHTML = appData.services.map(s => `
+            <div class="service-card">
+                <div class="icon"><i class="fas ${s.icon || 'fa-code'}"></i></div>
+                <div class="name">${s.name}</div>
+                <div class="desc">${s.desc || ''}</div>
+                <div class="price">${s.price.toLocaleString()} ₽</div>
+                <button class="btn-order" onclick="orderService(${s.id})"><i class="fas fa-paper-plane"></i> ЗАКАЗАТЬ</button>
+            </div>
+        `).join('');
+        countLabel.textContent = appData.services.length + ' услуг';
+        count.textContent = appData.services.length;
+    }
+
+    function orderService(id) {
+        if (!currentUser) { showToast('ВОЙДИТЕ В АККАУНТ', 'error'); return; }
+        const service = appData.services.find(s => s.id === id);
+        if (!service) return;
+        const user = appData.users.find(u => u.id === currentUser.id);
+        if (!user) return;
+        if (user.balance < service.price) {
+            showToast(`❌ НЕДОСТАТОЧНО СРЕДСТВ! Нужно ${service.price} ₽, у вас ${user.balance} ₽`, 'error');
+            return;
+        }
+        user.balance -= service.price;
+        appData.adminBalance += service.price;
+        appData.transactions.push({
+            type: 'purchase',
+            userId: user.id,
+            userName: user.name,
+            serviceName: service.name,
+            amount: service.price,
+            date: new Date().toISOString()
+        });
+        saveData(appData);
+        currentUser.balance = user.balance;
+        updateProfileInfo();
+        renderCatalog();
+        renderAdminUsers();
+        renderAdminFinance();
+        showToast(`✅ Услуга "${service.name}" оплачена! С баланса списано ${service.price} ₽`, 'success');
+    }
+
+    function updateProfileInfo() {
+        if (!currentUser) { showSection('catalog'); return; }
+        document.getElementById('profileName').textContent = currentUser.name || '—';
+        document.getElementById('profileEmail').textContent = currentUser.email;
+        document.getElementById('profileRole').textContent = currentUser.role === 'admin' ? 'ADMIN' : 'USER';
+        document.getElementById('profileBalance').textContent = currentUser.balance || 0;
+        const adminRecharge = document.getElementById('adminRecharge');
+        if (adminRecharge) {
+            adminRecharge.style.display = (currentUser.role === 'admin') ? 'flex' : 'none';
+        }
+    }
+
+    function addUserBalance(userId, amount) {
+        const user = appData.users.find(u => u.id === userId);
+        if (!user) return;
+        user.balance = (user.balance || 0) + amount;
+        appData.transactions.push({
+            type: 'recharge',
+            userId: user.id,
+            userName: user.name,
+            amount: amount,
+            date: new Date().toISOString()
+        });
+        saveData(appData);
+        if (currentUser && currentUser.id === userId) {
+            currentUser.balance = user.balance;
+            updateProfileInfo();
+        }
+        renderAdminUsers();
+        renderAdminFinance();
+        showToast(`💰 Баланс пополнен на ${amount} ₽`, 'success');
+    }
+
+    function customRecharge() {
+        const input = document.getElementById('customRecharge');
+        const val = parseFloat(input.value);
+        if (isNaN(val) || val <= 0) { showToast('❌ Введите корректную сумму', 'error'); return; }
+        if (!currentUser) { showToast('❌ Войдите в аккаунт', 'error'); return; }
+        if (currentUser.role !== 'admin') {
+            showToast('❌ Только администратор может пополнять баланс', 'error');
+            return;
+        }
+        addUserBalance(currentUser.id, val);
+        input.value = '';
+    }
+
+    // ADMIN SERVICES
+    let editingServiceId = null;
+    function openAddService() {
+        document.getElementById('adminServiceForm').style.display = 'block';
+        document.getElementById('adminFormTitle').textContent = 'ДОБАВИТЬ УСЛУГУ';
+        document.getElementById('adminServiceName').value = '';
+        document.getElementById('adminServiceDesc').value = '';
+        document.getElementById('adminServicePrice').value = '';
+        document.getElementById('adminServiceIcon').value = 'fa-code';
+        editingServiceId = null;
+        document.getElementById('adminSaveServiceBtn').innerHTML = '<i class="fas fa-save"></i> СОХРАНИТЬ';
+    }
+    function closeServiceForm() {
+        document.getElementById('adminServiceForm').style.display = 'none';
+        editingServiceId = null;
+    }
+    function editService(id) {
+        const service = appData.services.find(s => s.id === id);
+        if (!service) return;
+        document.getElementById('adminServiceForm').style.display = 'block';
+        document.getElementById('adminFormTitle').textContent = 'РЕДАКТИРОВАТЬ';
+        document.getElementById('adminServiceName').value = service.name;
+        document.getElementById('adminServiceDesc').value = service.desc || '';
+        document.getElementById('adminServicePrice').value = service.price;
+        document.getElementById('adminServiceIcon').value = service.icon || 'fa-code';
+        editingServiceId = id;
+        document.getElementById('adminSaveServiceBtn').innerHTML = '<i class="fas fa-sync-alt"></i> ОБНОВИТЬ';
+    }
+    function saveService() {
+        const name = document.getElementById('adminServiceName').value.trim();
+        const desc = document.getElementById('adminServiceDesc').value.trim();
+        const price = parseFloat(document.getElementById('adminServicePrice').value);
+        const icon = document.getElementById('adminServiceIcon').value.trim() || 'fa-code';
+        if (!name || isNaN(price) || price < 0) { showToast('НЕВЕРНЫЕ ДАННЫЕ', 'error'); return; }
+        if (editingServiceId !== null) {
+            const idx = appData.services.findIndex(s => s.id === editingServiceId);
+            if (idx !== -1) { appData.services[idx] = { ...appData.services[idx], name, desc, price, icon }; showToast('УСЛУГА ОБНОВЛЕНА', 'success'); }
+        } else {
+            appData.services.push({ id: appData.nextServiceId++, name, desc, price, icon });
+            showToast('УСЛУГА ДОБАВЛЕНА', 'success');
+        }
+        saveData(appData);
+        closeServiceForm();
+        renderAdminServices();
+        renderCatalog();
+    }
+    function deleteService(id) {
+        if (!confirm('УДАЛИТЬ УСЛУГУ #' + id + '?')) return;
+        appData.services = appData.services.filter(s => s.id !== id);
+        saveData(appData);
+        renderAdminServices();
+        renderCatalog();
+        showToast('УСЛУГА УДАЛЕНА', '');
+    }
+    function clearAllServices() {
+        if (!confirm('УДАЛИТЬ ВСЕ УСЛУГИ?')) return;
+        appData.services = [];
+        appData.nextServiceId = 1;
+        saveData(appData);
+        renderAdminServices();
+        renderCatalog();
+        showToast('ВСЕ УСЛУГИ УДАЛЕНЫ', '');
+    }
+    function renderAdminServices() {
+        const list = document.getElementById('adminServiceList');
+        if (appData.services.length === 0) { list.innerHTML = '<p style="text-align:center;color:var(--text-dim);">УСЛУГ НЕТ</p>'; return; }
+        list.innerHTML = appData.services.map(s => `
+            <div class="admin-service-item" style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,255,136,0.02);border:1px solid rgba(0,255,136,0.05);padding:12px 18px;border-radius:8px;margin-bottom:10px;flex-wrap:wrap;transition:0.3s;">
+                <div class="info" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;"><i class="fas ${s.icon || 'fa-code'}" style="color:var(--neon-green);font-size:18px;"></i><span style="font-weight:500;font-size:14px;">${s.name}</span><span style="color:var(--neon-green);">${s.price.toLocaleString()} ₽</span></div>
+                <div class="actions"><button onclick="editService(${s.id})" style="margin-left:8px;padding:4px 14px;border-radius:4px;font-size:12px;background:transparent;border:1px solid rgba(0,255,136,0.1);color:var(--text-primary);transition:0.3s;cursor:pointer;font-family:var(--font-mono);"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="deleteService(${s.id})" style="margin-left:8px;padding:4px 14px;border-radius:4px;font-size:12px;background:transparent;border:1px solid rgba(0,255,136,0.1);color:var(--text-primary);transition:0.3s;cursor:pointer;font-family:var(--font-mono);color:var(--neon-red);"><i class="fas fa-trash"></i></button></div>
+            </div>
+        `).join('');
+    }
+
+    // ADMIN USERS
+    function renderAdminUsers() {
+        const tbody = document.getElementById('adminUsersTableBody');
+        if (!tbody) return;
+        if (appData.users.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:20px;">Пользователей нет</td></tr>'; return; }
+        tbody.innerHTML = appData.users.map(u => `
+            <tr><td>#${u.id}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role === 'admin' ? '👑 Админ' : '👤 Пользователь'}</td>
+            <td><div class="admin-input-group"><input type="number" id="balance_input_${u.id}" value="${u.balance || 0}" step="100" min="0"><button onclick="setBalance(${u.id})" style="background:transparent;border:1px solid rgba(0,255,136,0.1);color:var(--neon-green);padding:2px 8px;border-radius:4px;cursor:pointer;font-family:var(--font-mono);font-size:11px;">💳</button></div></td>
+            <td><span class="status-badge ${u.isBlocked ? 'blocked' : 'active'}">${u.isBlocked ? '🔒 Заблокирован' : '✅ Активен'}</span></td>
+            <td class="user-actions"><button onclick="addUserBalance(${u.id}, 100)">+100 ₽</button><button onclick="addUserBalance(${u.id}, 500)">+500 ₽</button><button onclick="addUserBalance(${u.id}, 1000)">+1000 ₽</button><button class="danger" onclick="removeBalance(${u.id}, 100)">-100 ₽</button><button class="danger" onclick="toggleBlockUser(${u.id})">${u.isBlocked ? '🔓 Разблокировать' : '🔒 Заблокировать'}</button></td></tr>
+        `).join('');
+    }
+    function removeBalance(userId, amount) {
+        const user = appData.users.find(u => u.id === userId);
+        if (!user) return;
+        const current = user.balance || 0;
+        if (current < amount) { showToast('❌ Недостаточно средств для списания', 'error'); return; }
+        user.balance = current - amount;
+        saveData(appData);
+        renderAdminUsers();
+        if (currentUser && currentUser.id === userId) currentUser.balance = user.balance;
+        updateProfileInfo();
+        renderAdminFinance();
+        showToast(`💸 ${user.name} -${amount} ₽`, '');
+    }
+    function setBalance(userId) {
+        const input = document.getElementById(`balance_input_${userId}`);
+        if (!input) return;
+        const val = parseFloat(input.value);
+        if (isNaN(val) || val < 0) { showToast('❌ Введите корректную сумму', 'error'); return; }
+        const user = appData.users.find(u => u.id === userId);
+        if (!user) return;
+        user.balance = val;
+        saveData(appData);
+        renderAdminUsers();
+        if (currentUser && currentUser.id === userId) currentUser.balance = user.balance;
+        updateProfileInfo();
+        showToast(`💰 Баланс ${user.name} установлен на ${val} ₽`, 'success');
+    }
+    function toggleBlockUser(userId) {
+        const user = appData.users.find(u => u.id === userId);
+        if (!user) return;
+        if (user.role === 'admin') { showToast('❌ Нельзя блокировать администратора', 'error'); return; }
+        user.isBlocked = !user.isBlocked;
+        saveData(appData);
+        renderAdminUsers();
+        if (currentUser && currentUser.id === userId && user.isBlocked) {
+            localStorage.removeItem('cyberforge_session');
+            currentUser = null;
+            updateHeader();
+            showSection('catalog');
+            showToast('🔒 Вас заблокировали!', 'error');
+        }
+        showToast(`🔒 ${user.name} ${user.isBlocked ? 'заблокирован' : 'разблокирован'}`, '');
+    }
+
+    // ADMIN FINANCE
+    function renderAdminFinance() {
+        const balanceDisplay = document.getElementById('adminBalanceDisplay');
+        if (balanceDisplay) balanceDisplay.textContent = appData.adminBalance || 0;
+        const list = document.getElementById('transactionList');
+        if (!list) return;
+        if (appData.transactions.length === 0) { list.innerHTML = '<p style="color:var(--text-dim);text-align:center;">Транзакций пока нет</p>'; return; }
+        const reversed = [...appData.transactions].reverse().slice(0, 20);
+        list.innerHTML = reversed.map(t => {
+            const typeClass = t.type === 'purchase' ? 'outcome' : 'income';
+            const label = t.type === 'purchase' ? 'Покупка услуги' : t.type === 'withdraw' ? 'Вывод на карту' : 'Пополнение баланса';
+            const detail = t.type === 'purchase' ? `${t.userName} → ${t.serviceName}` :
+                           t.type === 'withdraw' ? `Вывод ${t.amount} ₽ на карту` :
+                           `${t.userName} пополнил на ${t.amount} ₽`;
+            return `<div class="transaction-item"><div><span class="type ${typeClass}">${label}</span> <span style="color:var(--text-secondary);">${detail}</span></div><div class="date">${new Date(t.date).toLocaleString()}</div></div>`;
+        }).join('');
+    }
+    function withdrawAdmin() {
+        if (appData.adminBalance <= 0) { showToast('❌ Баланс администратора пуст', 'error'); return; }
+        const amount = appData.adminBalance;
+        appData.transactions.push({ type: 'withdraw', userName: 'Администратор', amount: amount, date: new Date().toISOString() });
+        appData.adminBalance = 0;
+        saveData(appData);
+        renderAdminFinance();
+        showToast(`💳 Вывод ${amount} ₽ на карту выполнен!`, 'success');
+    }
+
+    // ===== ЗАЯВКИ =====
+    function renderUserRecharges() {
+        const container = document.getElementById('userRecharges');
+        if (!container || !currentUser) return;
+        const userReqs = appData.rechargeRequests.filter(r => r.userId === currentUser.id);
+        if (userReqs.length === 0) { container.innerHTML = '<p style="color:var(--text-dim);font-size:13px;">У вас нет заявок на пополнение.</p>'; return; }
+        container.innerHTML = userReqs.map(r => {
+            let statusText = '', statusClass = '';
+            if (r.status === 'pending') { statusText = '⏳ Ожидает обработки'; statusClass = 'status-pending'; }
+            else if (r.status === 'replied') { statusText = '💬 Получен ответ'; statusClass = 'status-replied'; }
+            else if (r.status === 'completed') { statusText = '✅ Зачислено'; statusClass = 'status-completed'; }
+            return `
+                <div class="recharge-request">
+                    <div class="header"><span class="user">Заявка №${r.id} · ${r.amount} ₽</span><span class="date">${new Date(r.date).toLocaleString()}</span><span class="${statusClass}">${statusText}</span></div>
+                    ${r.comment ? `<div class="message"><strong>Комментарий:</strong> ${r.comment}</div>` : ''}
+                    ${r.adminReply ? `<div class="reply"><div class="label">Ответ администратора:</div>${r.adminReply}</div>` : ''}
+                    ${r.status === 'pending' ? `<button onclick="cancelRechargeRequest(${r.id})" style="background:transparent;border:1px solid var(--neon-red);color:var(--neon-red);padding:4px 12px;border-radius:4px;cursor:pointer;font-family:var(--font-mono);font-size:12px;">Отменить</button>` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function showRechargeForm() { document.getElementById('rechargeForm').style.display = 'block'; }
+    function closeRechargeForm() { document.getElementById('rechargeForm').style.display = 'none'; document.getElementById('rechargeAmount').value = ''; document.getElementById('rechargeComment').value = ''; }
+
+    function sendRechargeRequest() {
+        if (!currentUser) { showToast('❌ Войдите в аккаунт', 'error'); return; }
+        const amount = parseFloat(document.getElementById('rechargeAmount').value);
+        if (!amount || amount <= 0) { showToast('⚠️ Введите корректную сумму', 'error'); return; }
+        const comment = document.getElementById('rechargeComment').value.trim();
+        const req = {
+            id: appData.rechargeRequests.length + 1,
+            userId: currentUser.id,
+            userName: currentUser.name,
+            userEmail: currentUser.email,
+            amount: amount,
+            comment: comment,
+            date: new Date().toISOString(),
+            status: 'pending',
+            adminReply: null,
+            replyDate: null
+        };
+        appData.rechargeRequests.push(req);
+        saveData(appData);
+        closeRechargeForm();
+        renderUserRecharges();
+        showToast('✅ Заявка на пополнение отправлена!', 'success');
+        if (currentUser.role === 'admin') renderAdminRecharges();
+    }
+
+    function cancelRechargeRequest(id) {
+        const req = appData.rechargeRequests.find(r => r.id === id);
+        if (!req) return;
+        if (req.status !== 'pending') { showToast('❌ Нельзя отменить обработанную заявку', 'error'); return; }
+        if (req.userId !== currentUser.id) { showToast('❌ Это не ваша заявка', 'error'); return; }
+        appData.rechargeRequests = appData.rechargeRequests.filter(r => r.id !== id);
+        saveData(appData);
+        renderUserRecharges();
+        if (currentUser.role === 'admin') renderAdminRecharges();
+        showToast('🗑️ Заявка отменена', '');
+    }
+
+    function renderAdminRecharges() {
+        const container = document.getElementById('adminRechargeList');
+        if (!container) return;
+        if (appData.rechargeRequests.length === 0) { container.innerHTML = '<p style="color:var(--text-dim);text-align:center;">Нет заявок на пополнение.</p>'; return; }
+        container.innerHTML = appData.rechargeRequests.map(r => {
+            let statusText = '', statusClass = '';
+            if (r.status === 'pending') { statusText = '⏳ Ожидает'; statusClass = 'status-pending'; }
+            else if (r.status === 'replied') { statusText = '💬 Ответ дан'; statusClass = 'status-replied'; }
+            else if (r.status === 'completed') { statusText = '✅ Зачислено'; statusClass = 'status-completed'; }
+            return `
+                <div class="recharge-request">
+                    <div class="header"><span class="user">№${r.id} · ${r.userName} (${r.userEmail}) · ${r.amount} ₽</span><span class="date">${new Date(r.date).toLocaleString()}</span><span class="${statusClass}">${statusText}</span></div>
+                    ${r.comment ? `<div class="message"><strong>Комментарий:</strong> ${r.comment}</div>` : ''}
+                    ${r.adminReply ? `<div class="reply"><div class="label">Ваш ответ:</div>${r.adminReply}</div>` : ''}
+                    <div class="admin-reply-form">
+                        <input type="text" id="adminReplyInput_${r.id}" placeholder="Введите реквизиты или ответ..." value="${r.adminReply || ''}">
+                        <button onclick="submitAdminRechargeReply(${r.id})">Ответить</button>
+                        ${r.status !== 'completed' ? `<button onclick="completeRecharge(${r.id})" style="background:var(--neon-green);color:var(--bg-primary);border:none;padding:8px 16px;border-radius:6px;font-family:var(--font-mono);font-weight:600;cursor:pointer;">Зачислить</button>` : ''}
+                        <button onclick="deleteRechargeRequest(${r.id})" class="danger" style="background:var(--neon-red);color:var(--bg-primary);border:none;padding:8px 16px;border-radius:6px;font-family:var(--font-mono);font-weight:600;cursor:pointer;">Удалить</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function submitAdminRechargeReply(reqId) {
+        const input = document.getElementById(`adminReplyInput_${reqId}`);
+        if (!input) return;
+        const reply = input.value.trim();
+        if (!reply) { showToast('⚠️ Введите текст ответа', 'error'); return; }
+        const req = appData.rechargeRequests.find(r => r.id === reqId);
+        if (!req) return;
+        req.adminReply = reply;
+        req.replyDate = new Date().toISOString();
+        req.status = 'replied';
+        saveData(appData);
+        renderAdminRecharges();
+        renderUserRecharges();
+        showToast('✅ Ответ отправлен пользователю', 'success');
+    }
+
+    function completeRecharge(reqId) {
+        const req = appData.rechargeRequests.find(r => r.id === reqId);
+        if (!req) return;
+        if (req.status === 'completed') { showToast('❌ Уже зачислено', 'error'); return; }
+        const user = appData.users.find(u => u.id === req.userId);
+        if (!user) { showToast('❌ Пользователь не найден', 'error'); return; }
+        user.balance = (user.balance || 0) + req.amount;
+        appData.transactions.push({
+            type: 'recharge',
+            userId: user.id,
+            userName: user.name,
+            amount: req.amount,
+            date: new Date().toISOString(),
+            source: 'Заявка №' + req.id
+        });
+        req.status = 'completed';
+        req.completedDate = new Date().toISOString();
+        saveData(appData);
+        renderAdminRecharges();
+        renderUserRecharges();
+        if (currentUser && currentUser.id === user.id) {
+            currentUser.balance = user.balance;
+            updateProfileInfo();
+        }
+        showToast(`💰 Пользователю ${user.name} зачислено ${req.amount} ₽`, 'success');
+    }
+
+    function deleteRechargeRequest(reqId) {
+        if (!confirm('Удалить заявку?')) return;
+        appData.rechargeRequests = appData.rechargeRequests.filter(r => r.id !== reqId);
+        saveData(appData);
+        renderAdminRecharges();
+        renderUserRecharges();
+        showToast('🗑️ Заявка удалена', '');
+    }
+
+    // ===== ВКЛАДКИ =====
+    function switchAdminTab(tab) {
+        const tabServices = document.getElementById('tabServices');
+        const tabUsers = document.getElementById('tabUsers');
+        const tabFinance = document.getElementById('tabFinance');
+        const tabRecharges = document.getElementById('tabRecharges');
+        const blockServices = document.getElementById('adminServicesBlock');
+        const blockUsers = document.getElementById('adminUsersBlock');
+        const blockFinance = document.getElementById('adminFinanceBlock');
+        const blockRecharges = document.getElementById('adminRechargesBlock');
+        [tabServices, tabUsers, tabFinance, tabRecharges].forEach(el => el.classList.remove('active'));
+        if (tab === 'services') {
+            tabServices.classList.add('active');
+            blockServices.style.display = 'block';
+            blockUsers.style.display = 'none';
+            blockFinance.style.display = 'none';
+            blockRecharges.style.display = 'none';
+            renderAdminServices();
+        } else if (tab === 'users') {
+            tabUsers.classList.add('active');
+            blockServices.style.display = 'none';
+            blockUsers.style.display = 'block';
+            blockFinance.style.display = 'none';
+            blockRecharges.style.display = 'none';
+            renderAdminUsers();
+        } else if (tab === 'finance') {
+            tabFinance.classList.add('active');
+            blockServices.style.display = 'none';
+            blockUsers.style.display = 'none';
+            blockFinance.style.display = 'block';
+            blockRecharges.style.display = 'none';
+            renderAdminFinance();
+        } else if (tab === 'recharges') {
+            tabRecharges.classList.add('active');
+            blockServices.style.display = 'none';
+            blockUsers.style.display = 'none';
+            blockFinance.style.display = 'none';
+            blockRecharges.style.display = 'block';
+            renderAdminRecharges();
+        }
+    }
+
+    // ===== ТЕРМИНАЛ =====
+    const termOutput = document.getElementById('termOutput');
+    const termInput = document.getElementById('termInput');
+    function addTermLine(text, className = '') {
+        const div = document.createElement('div');
+        div.innerHTML = text;
+        if (className) div.className = className;
+        termOutput.appendChild(div);
+        termOutput.scrollTop = termOutput.scrollHeight;
+    }
+    function runCommand(cmd) {
+        cmd = cmd.trim().toLowerCase();
+        if (!cmd) return;
+        addTermLine(`<span class="prompt">❯</span> ${cmd}`);
+        const commands = {
+            help: () => {
+                addTermLine('Доступные команды:');
+                addTermLine('  <span class="info">help</span>  - показать это сообщение');
+                addTermLine('  <span class="info">scan</span>   - сканировать порты (демо)');
+                addTermLine('  <span class="info">whoami</span> - показать текущего пользователя');
+                addTermLine('  <span class="info">date</span>   - показать текущую дату и время');
+                addTermLine('  <span class="info">clear</span>  - очистить терминал');
+                addTermLine('  <span class="info">hack</span>   - демо-атака');
+                addTermLine('  <span class="info">banner</span> - показать баннер');
+            },
+            scan: () => {
+                const ports = [21,22,23,25,53,80,110,135,139,143,443,445,993,995,1723,3306,3389,5432,5900,6379,27017];
+                addTermLine(`🔍 Сканирование target.local...`);
+                let delay = 200;
+                ports.forEach((port, i) => {
+                    setTimeout(() => {
+                        const status = Math.random() > 0.7 ? 'OPEN' : 'closed';
+                        const color = status === 'OPEN' ? 'success' : 'error';
+                        addTermLine(`  Порт ${port}: <span class="${color}">${status}</span>`);
+                    }, delay * i);
+                });
+                setTimeout(() => addTermLine('✅ Сканирование завершено'), delay * ports.length);
+            },
+            whoami: () => { addTermLine(`👤 ${currentUser ? currentUser.name : 'anonymous'}@cyberforge`); },
+            date: () => { addTermLine(`📅 ${new Date().toLocaleString()}`); },
+            clear: () => { termOutput.innerHTML = ''; },
+            hack: () => {
+                const targets = ['NASA', 'Pentagon', 'Kremlin', 'CIA', 'Facebook', 'Google', 'Microsoft'];
+                const target = targets[Math.floor(Math.random() * targets.length)];
+                addTermLine(`🖥️ Взлом ${target}...`);
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 15) + 5;
+                    if (progress >= 100) { progress = 100; clearInterval(interval);
+                        addTermLine(`✅ ${target} ВЗЛОМАН! Доступ получен. (ДЕМО)`);
+                    } else { addTermLine(`  █${'█'.repeat(Math.floor(progress/4))} ${progress}%`); }
+                }, 300);
+            },
+            banner: () => {
+                addTermLine('┌─────────────────────────────────────┐');
+                addTermLine('│   ██████╗██╗   ██╗██████╗ ███████╗  │');
+                addTermLine('│  ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝  │');
+                addTermLine('│  ██║      ╚████╔╝ ██████╔╝█████╗    │');
+                addTermLine('│  ██║       ╚██╔╝  ██╔══██╗██╔══╝    │');
+                addTermLine('│  ╚██████╗   ██║   ██████╔╝███████╗  │');
+                addTermLine('│   ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝  │');
+                addTermLine('└─────────────────────────────────────┘');
+                addTermLine('    <span class="info">CYBERFORGE v3.0</span>');
+            }
+        };
+        if (commands[cmd]) { commands[cmd](); } else { addTermLine(`<span class="error">Команда не найдена: ${cmd}. Введите help</span>`); }
+        termInput.value = '';
+    }
+    termInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { const cmd = this.value.trim(); if (cmd) runCommand(cmd); } });
+
+    // ===== ИНСТРУМЕНТЫ =====
+    function scanPorts() {
+        const target = document.getElementById('scanTarget').value.trim() || 'localhost';
+        const result = document.getElementById('scanResult');
+        result.innerHTML = '⏳ Сканирование...';
+        const commonPorts = [
+            { port: 21, name: 'FTP' }, { port: 22, name: 'SSH' }, { port: 23, name: 'Telnet' },
+            { port: 25, name: 'SMTP' }, { port: 53, name: 'DNS' }, { port: 80, name: 'HTTP' },
+            { port: 110, name: 'POP3' }, { port: 143, name: 'IMAP' }, { port: 443, name: 'HTTPS' },
+            { port: 3306, name: 'MySQL' }, { port: 3389, name: 'RDP' }, { port: 5432, name: 'PostgreSQL' },
+            { port: 6379, name: 'Redis' }, { port: 27017, name: 'MongoDB' }
+        ];
+        let results = [];
+        commonPorts.forEach((p, i) => {
+            setTimeout(() => {
+                const open = Math.random() > 0.65;
+                results.push(`${p.port} (${p.name}): ${open ? '🟢 ОТКРЫТ' : '🔴 ЗАКРЫТ'}`);
+                if (i === commonPorts.length - 1) { result.innerHTML = `📍 ${target}\n` + results.join('\n'); }
+            }, 150 * i);
+        });
+    }
+    function generatePassword() {
+        const length = parseInt(document.getElementById('passLength').value) || 16;
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=';
+        let pass = '';
+        for (let i = 0; i < length; i++) { pass += chars[Math.floor(Math.random() * chars.length)]; }
+        document.getElementById('passResult').innerHTML = `<span class="green">${pass}</span>`;
+        const strength = document.getElementById('passStrength');
+        let score = 0;
+        if (length >= 8) score++;
+        if (length >= 12) score++;
+        if (/[A-Z]/.test(pass)) score++;
+        if (/[a-z]/.test(pass)) score++;
+        if (/[0-9]/.test(pass)) score++;
+        if (/[!@#$%^&*()_+-=]/.test(pass)) score++;
+        const levels = ['Очень слабый','Слабый','Средний','Средний+','Сильный','Очень сильный','Невероятный'];
+        strength.textContent = levels[Math.min(score, 6)];
+        strength.style.color = score >= 4 ? 'var(--neon-green)' : 'var(--neon-red)';
+    }
+    function cipherText() {
+        const text = document.getElementById('cipherInput').value;
+        const type = document.getElementById('cipherType').value;
+        const result = document.getElementById('cipherResult');
+        if (!text) { result.innerHTML = '⚠️ Введите текст'; return; }
+        let output = '';
+        if (type === 'base64') { output = btoa(unescape(encodeURIComponent(text))); }
+        else if (type === 'caesar') {
+            output = text.split('').map(c => {
+                if (c >= 'a' && c <= 'z') return String.fromCharCode((c.charCodeAt(0) - 97 + 13) % 26 + 97);
+                if (c >= 'A' && c <= 'Z') return String.fromCharCode((c.charCodeAt(0) - 65 + 13) % 26 + 65);
+                return c;
+            }).join('');
+        } else if (type === 'xor') {
+            const key = 42;
+            output = text.split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ key)).join('');
+        }
+        result.innerHTML = `<span class="green">${output}</span>`;
+    }
+    async function generateHash() {
+        const text = document.getElementById('hashInput').value;
+        const result = document.getElementById('hashResult');
+        if (!text) { result.innerHTML = '⚠️ Введите текст'; return; }
+        try {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            result.innerHTML = `<span class="green">${hashHex}</span>`;
+        } catch { result.innerHTML = '❌ Ошибка генерации хеша'; }
+    }
+
+    // ===== ИНИЦИАЛИЗАЦИЯ =====
+    appData.users.forEach(u => {
+        if (u.balance === undefined) u.balance = 0;
+        if (u.isBlocked === undefined) u.isBlocked = false;
+    });
+    if (appData.adminBalance === undefined) appData.adminBalance = 0;
+    if (!appData.transactions) appData.transactions = [];
+    if (!appData.rechargeRequests) appData.rechargeRequests = [];
+    saveData(appData);
+
+    loadCurrentUser();
+    updateHeader();
+    renderCatalog();
+
+    if (currentUser && currentUser.role === 'admin') {
+        document.getElementById('mainAdminBtn').style.display = 'inline-flex';
+    }
+
+    showSection('catalog');
+    console.log('🕷️ CYBERFORGE v3.0 с системой пополнения загружена!');
+    console.log('👤 ADMIN: admin@cyber.forge / admin123');
+    console.log('💳 Пользователи отправляют заявки на пополнение, админ зачисляет.');
+</script>
+</body>
+</html>
